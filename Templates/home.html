@@ -1,0 +1,95 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<!-- Hero Section -->
+<div class="content-section text-center mb-4">
+    <h1 class="display-4">Expense Tracker</h1>
+    <p class="lead">
+        Manage your expenses efficiently and take control of your finances.
+    </p>
+
+    <a href="{{ url_for('register') }}" class="btn btn-primary">
+        Get Started
+    </a>
+
+    <a href="{{ url_for('login') }}" class="btn btn-outline-primary">
+        Login
+    </a>
+</div>
+
+<!-- Statistics Cards -->
+<div class="row mb-4">
+
+    <div class="col-md-4">
+        <div class="card text-center shadow-sm">
+            <div class="card-body">
+                <h5>Total Expenses</h5>
+                <h3>₹{{ total_expense }}</h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card text-center shadow-sm">
+            <div class="card-body">
+                <h5>This Month</h5>
+                <h3>₹{{ monthly_expense }}</h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card text-center shadow-sm">
+            <div class="card-body">
+                <h5>Categories</h5>
+                <h3>{{ total_categories }}</h3>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- Features Section -->
+<div class="content-section">
+
+    <h2 class="mb-4">Why Use Expense Tracker?</h2>
+
+    <div class="row">
+
+        <div class="col-md-6 mb-3">
+            <h4>💰 Expense Tracking</h4>
+            <p>
+                Record and monitor your daily expenses easily.
+            </p>
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <h4>🏷 Expense Categories</h4>
+            <p>
+                Organize expenses into categories such as Food,
+                Travel, Shopping, and Utilities.
+            </p>
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <h4>📊 Financial Analysis</h4>
+            <p>
+                View spending summaries and understand your
+                spending habits.
+            </p>
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <h4>🔒 Secure Access</h4>
+            <p>
+                Your expense records remain protected through
+                user authentication.
+            </p>
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock content %}
