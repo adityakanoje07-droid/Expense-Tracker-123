@@ -41,7 +41,10 @@ if database_uri.startswith("postgres://"):
         1
     )
 
-app.config["SECRET_KEY"] = "dev-secret-key"
+app.config["SECRET_KEY"] = os.environ.get(
+    "SECRET_KEY",
+    "SECRET_KEY=my-expense-tracker-secret-2026"
+)
 app.config["SQLALCHEMY_DATABASE_URI"] = database_uri
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
