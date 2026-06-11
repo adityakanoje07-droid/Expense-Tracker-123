@@ -8,3 +8,4 @@ gunicorn
 psycopg2-binary
 plotly
 numpy
+pandas
