@@ -1,0 +1,58 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<h2>Monthly Report</h2>
+
+<div class="card p-3 mb-3">
+    <h4>Total Monthly Expense</h4>
+    <h3>₹{{ total_monthly }}</h3>
+</div>
+
+<div class="card p-3 mb-3">
+    <h4>Total Transactions</h4>
+    <h3>{{ total_transactions }}</h3>
+</div>
+
+<div class="card p-3 mb-3">
+    <h4>Highest Spending Category</h4>
+    <h3>{{ highest_category }}</h3>
+</div>
+
+<h3 class="mt-4">
+    Expense Distribution
+</h3>
+
+<div class="card p-3 mb-4">
+
+    {% if chart_html %}
+        {{ chart_html|safe }}
+    {% else %}
+        <p>
+            No expenses available for this month.
+        </p>
+    {% endif %}
+
+</div>
+
+<h4>Category Breakdown</h4>
+
+<table class="table table-bordered">
+
+<tr>
+    <th>Category</th>
+    <th>Amount</th>
+</tr>
+
+{% for category, amount in category_totals.items() %}
+
+<tr>
+    <td>{{ category }}</td>
+    <td>₹{{ amount }}</td>
+</tr>
+
+{% endfor %}
+
+</table>
+
+{% endblock %}
