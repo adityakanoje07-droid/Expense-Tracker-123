@@ -5,6 +5,8 @@ from flask import Flask, render_template, request, url_for, flash, redirect
 from forms import RegistrationForm, LoginForm
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
+from collections import defaultdict
+import plotly.express as px
 
 # app = Flask(__name__)
 # app.config['SECRET_KEY'] = '5791628bb0b13ce0c676dfde280ba245'
@@ -41,10 +43,7 @@ if database_uri.startswith("postgres://"):
         1
     )
 
-app.config["SECRET_KEY"] = os.environ.get(
-    "SECRET_KEY",
-    "SECRET_KEY=my-expense-tracker-secret-2026"
-)
+app.config["SECRET_KEY"] = "dev-secret-key"
 app.config["SQLALCHEMY_DATABASE_URI"] = database_uri
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
@@ -282,6 +281,66 @@ def delete_expense(id):
     db.session.commit()
 
     return redirect(url_for('dashboard'))
+
+@app.route('/monthly_report')
+@login_required
+def monthly_report():
+
+    expenses = Expense.query.filter_by(
+        user_id=current_user.id
+    ).all()
+
+    current_month = datetime.now().month
+
+    monthly_expenses = [
+        exp for exp in expenses
+        if datetime.strptime(
+            exp.date,
+            "%Y-%m-%d"
+        ).month == current_month
+    ]
+
+    total_monthly = sum(
+        exp.amount
+        for exp in monthly_expenses
+    )
+
+    category_totals = defaultdict(float)
+
+    for exp in monthly_expenses:
+        category_totals[exp.category] += exp.amount
+
+    highest_category = (
+        max(category_totals,
+            key=category_totals.get)
+        if category_totals
+        else "None"
+    )
+
+    labels = list(category_totals.keys())
+    values = list(category_totals.values())
+
+    chart_html = ""
+
+    if values:
+        fig = px.pie(
+            names=labels,
+            values=values,
+            title="Expense Distribution"
+        )
+
+        chart_html = fig.to_html(
+            full_html=False
+        )
+
+    return render_template(
+        'monthly_report.html',
+        total_monthly=total_monthly,
+        total_transactions=len(monthly_expenses),
+        highest_category=highest_category,
+        category_totals=category_totals,
+        chart_html=chart_html
+    )
 
 with app.app_context():
     db.create_all()
