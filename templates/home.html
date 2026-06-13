@@ -9,13 +9,31 @@
         Manage your expenses efficiently and take control of your finances.
     </p>
 
-    <a href="{{ url_for('register') }}" class="btn btn-primary">
-        Get Started
-    </a>
+   {% if current_user.is_authenticated %}
 
-    <a href="{{ url_for('login') }}" class="btn btn-outline-primary">
-        Login
+    <a href="{{ url_for('dashboard') }}"
+       class="btn btn-primary">
+       Go to Dashboard
     </a>
+    
+    <a href="{{ url_for('add_expense') }}"
+       class="btn btn-success">
+       Add Expense
+    </a>
+    
+    {% else %}
+    
+    <a href="{{ url_for('register') }}"
+       class="btn btn-primary">
+       Get Started
+    </a>
+    
+    <a href="{{ url_for('login') }}"
+       class="btn btn-outline-primary">
+       Login
+    </a>
+    
+    {% endif %}
 </div>
 
 <!-- Statistics Cards -->
