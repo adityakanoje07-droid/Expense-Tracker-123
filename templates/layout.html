@@ -123,19 +123,23 @@
           </div>
         </div>
       </div>
-      <div class="content-section mb-4">
-            <h1 class="mb-3">Expense Tracker</h1>
+      {% if not current_user.is_authenticated %}
 
-            <p class="lead">
+        <div class="content-section">
+            <h1>Expense Tracker</h1>
+        
+            <p>
                 Track your daily expenses, monitor spending habits,
                 and manage your finances efficiently.
             </p>
-
+        
             <a href="{{ url_for('register') }}"
-              class="btn btn-primary">
-              Get Started
+               class="btn btn-primary">
+               Get Started
             </a>
         </div>
+
+       {% endif %}
 
     </main>
 
