@@ -1,7 +1,10 @@
 body {
-  background: #fafafa;
-  color: #333333;
-  margin-top: 5rem;
+    background-image: url('/static/background.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    margin-top: 5rem;
 }
 
 h1, h2, h3, h4, h5, h6 {
