@@ -173,7 +173,7 @@ def login():
         if user and user.password == form.password.data:
             login_user(user)
             flash(
-                'Login Successful!',
+                f'Welcome, {user.username}!',
                 'success'
             )
 
